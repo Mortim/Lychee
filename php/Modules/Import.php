@@ -36,7 +36,7 @@ final class Import {
 	public function url($urls, $albumID = 0) {
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 0, func_get_args());
+		Plugins::get()->activate(__METHOD__, 0, func_get_args(), $this);
 
 		$error = false;
 
@@ -84,7 +84,7 @@ final class Import {
 		}
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 1, func_get_args());
+		Plugins::get()->activate(__METHOD__, 1, func_get_args(), $this);
 
 		if ($error===false) return true;
 		return false;
@@ -122,7 +122,7 @@ final class Import {
 		// Call plugins
 		// Note that updated albumId and path explicitly passed, rather
 		// than using func_get_args() which will only return original ones
-		Plugins::get()->activate(__METHOD__, 0, array($albumID, $path));
+		Plugins::get()->activate(__METHOD__, 0, array($albumID, $path), $this);
 
 		// Get all files
 		$files = glob($path . '/*');
@@ -178,7 +178,7 @@ final class Import {
 		// Call plugins
 		// Note that updated albumId and path explicitly passed, rather
 		// than using func_get_args() which will only return original ones
-		Plugins::get()->activate(__METHOD__, 1, array($albumID, $path));
+		Plugins::get()->activate(__METHOD__, 1, array($albumID, $path, $this));
 
 		// The following returns will be caught in the front-end
 		if ($contains['photos']===false&&$contains['albums']===false) return 'Warning: Folder empty or no readable files to process!';

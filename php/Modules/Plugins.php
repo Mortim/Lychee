@@ -13,6 +13,7 @@ final class Plugins implements SplSubject {
 
 	public $action = null;
 	public $args = null;
+	public $caller = null;
 
 	public static function get() {
 
@@ -75,9 +76,9 @@ final class Plugins implements SplSubject {
 
 	}
 
-	public function activate($name, $location, array $args) {
+	public function activate($name, $location, array $args, $caller) {
 
-		if (!isset($name, $location, $args)) return false;
+		if (!isset($name, $location, $args, $caller)) return false;
 
 		// Parse
 		$location = ($location===0 ? 'before' : 'after');
@@ -86,6 +87,7 @@ final class Plugins implements SplSubject {
 		// Save vars
 		$this->action = $action;
 		$this->args   = $args;
+		$this->caller = $caller;
 
 		// Notify observers
 		$this->notify();

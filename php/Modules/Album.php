@@ -26,7 +26,7 @@ final class Album {
 	public function add($title = 'Untitled') {
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 0, func_get_args());
+		Plugins::get()->activate(__METHOD__, 0, func_get_args(), $this);
 
 		// Properties
 		$id       = generateID();
@@ -39,7 +39,7 @@ final class Album {
 		$result = Database::execute(Database::get(), $query, __METHOD__, __LINE__);
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 1, func_get_args());
+		Plugins::get()->activate(__METHOD__, 1, func_get_args(), $this);
 
 		if ($result===false) return false;
 		return $id;
@@ -92,7 +92,7 @@ final class Album {
 		Validator::required(isset($this->albumIDs), __METHOD__);
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 0, func_get_args());
+		Plugins::get()->activate(__METHOD__, 0, func_get_args(), $this);
 
 		// Get album information
 		switch ($this->albumIDs) {
@@ -175,7 +175,7 @@ final class Album {
 		$return['num'] = $photos->num_rows;
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 1, func_get_args());
+		Plugins::get()->activate(__METHOD__, 1, func_get_args(), $this);
 
 		return $return;
 
@@ -191,7 +191,7 @@ final class Album {
 		Validator::required(isset($this->albumIDs), __METHOD__);
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 0, func_get_args());
+		Plugins::get()->activate(__METHOD__, 0, func_get_args(), $this);
 
 		// Illicit chars
 		$badChars =	array_merge(
@@ -317,7 +317,7 @@ final class Album {
 		unlink($filename);
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 1, func_get_args());
+		Plugins::get()->activate(__METHOD__, 1, func_get_args(), $this);
 
 		return true;
 
@@ -332,14 +332,14 @@ final class Album {
 		Validator::required(isset($this->albumIDs), __METHOD__);
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 0, func_get_args());
+		Plugins::get()->activate(__METHOD__, 0, func_get_args(), $this);
 
 		// Execute query
 		$query  = Database::prepare(Database::get(), "UPDATE ? SET title = '?' WHERE id IN (?)", array(LYCHEE_TABLE_ALBUMS, $title, $this->albumIDs));
 		$result = Database::execute(Database::get(), $query, __METHOD__, __LINE__);
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 1, func_get_args());
+		Plugins::get()->activate(__METHOD__, 1, func_get_args(), $this);
 
 		if ($result===false) return false;
 		return true;
@@ -355,14 +355,14 @@ final class Album {
 		Validator::required(isset($this->albumIDs), __METHOD__);
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 0, func_get_args());
+		Plugins::get()->activate(__METHOD__, 0, func_get_args(), $this);
 
 		// Execute query
 		$query  = Database::prepare(Database::get(), "UPDATE ? SET description = '?' WHERE id IN (?)", array(LYCHEE_TABLE_ALBUMS, $description, $this->albumIDs));
 		$result = Database::execute(Database::get(), $query, __METHOD__, __LINE__);
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 1, func_get_args());
+		Plugins::get()->activate(__METHOD__, 1, func_get_args(), $this);
 
 		if ($result===false) return false;
 		return true;
@@ -378,7 +378,7 @@ final class Album {
 		Validator::required(isset($this->albumIDs), __METHOD__);
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 0, func_get_args());
+		Plugins::get()->activate(__METHOD__, 0, func_get_args(), $this);
 
 		if ($this->albumIDs==='0'||$this->albumIDs==='s'||$this->albumIDs==='f') return false;
 
@@ -398,7 +398,7 @@ final class Album {
 		}
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 1, func_get_args());
+		Plugins::get()->activate(__METHOD__, 1, func_get_args(), $this);
 
 		if ($album->public==1) return true;
 		return false;
@@ -414,7 +414,7 @@ final class Album {
 		Validator::required(isset($this->albumIDs), __METHOD__);
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 0, func_get_args());
+		Plugins::get()->activate(__METHOD__, 0, func_get_args(), $this);
 
 		if ($this->albumIDs==='0'||$this->albumIDs==='s'||$this->albumIDs==='f'||$this->albumIDs==='r') return false;
 
@@ -434,7 +434,7 @@ final class Album {
 		}
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 1, func_get_args());
+		Plugins::get()->activate(__METHOD__, 1, func_get_args(), $this);
 
 		if ($album->downloadable==1) return true;
 		return false;
@@ -450,7 +450,7 @@ final class Album {
 		Validator::required(isset($this->albumIDs), __METHOD__);
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 0, func_get_args());
+		Plugins::get()->activate(__METHOD__, 0, func_get_args(), $this);
 
 		// Convert values
 		$public       = ($public==='1' ? 1 : 0);
@@ -474,7 +474,7 @@ final class Album {
 		}
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 1, func_get_args());
+		Plugins::get()->activate(__METHOD__, 1, func_get_args(), $this);
 
 		// Set password
 		if (isset($password)&&strlen($password)>0) return $this->setPassword($password);
@@ -491,7 +491,7 @@ final class Album {
 		Validator::required(isset($this->albumIDs), __METHOD__);
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 0, func_get_args());
+		Plugins::get()->activate(__METHOD__, 0, func_get_args(), $this);
 
 		if (strlen($password)>0) {
 
@@ -514,7 +514,7 @@ final class Album {
 		$result = Database::execute(Database::get(), $query, __METHOD__, __LINE__);
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 1, func_get_args());
+		Plugins::get()->activate(__METHOD__, 1, func_get_args(), $this);
 
 		if ($result===false) return false;
 		return true;
@@ -530,7 +530,7 @@ final class Album {
 		Validator::required(isset($this->albumIDs), __METHOD__);
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 0, func_get_args());
+		Plugins::get()->activate(__METHOD__, 0, func_get_args(), $this);
 
 		// Execute query
 		$query  = Database::prepare(Database::get(), "SELECT password FROM ? WHERE id = '?' LIMIT 1", array(LYCHEE_TABLE_ALBUMS, $this->albumIDs));
@@ -548,7 +548,7 @@ final class Album {
 		}
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 1, func_get_args());
+		Plugins::get()->activate(__METHOD__, 1, func_get_args(), $this);
 
 		// Check if password is correct
 		if ($album->password=='') return true;
@@ -566,7 +566,7 @@ final class Album {
 		Validator::required(isset($this->albumIDs), __METHOD__);
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 0, func_get_args());
+		Plugins::get()->activate(__METHOD__, 0, func_get_args(), $this);
 
 		// Convert to array
 		$albumIDs = explode(',', $this->albumIDs);
@@ -588,7 +588,7 @@ final class Album {
 		$result = Database::execute(Database::get(), $query, __METHOD__, __LINE__);
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 1, func_get_args());
+		Plugins::get()->activate(__METHOD__, 1, func_get_args(), $this);
 
 		if ($result===false) return false;
 		return true;
@@ -604,7 +604,7 @@ final class Album {
 		Validator::required(isset($this->albumIDs), __METHOD__);
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 0, func_get_args());
+		Plugins::get()->activate(__METHOD__, 0, func_get_args(), $this);
 
 		// Init vars
 		$photoIDs = array();
@@ -635,7 +635,7 @@ final class Album {
 		$result = Database::execute(Database::get(), $query, __METHOD__, __LINE__);
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 1, func_get_args());
+		Plugins::get()->activate(__METHOD__, 1, func_get_args(), $this);
 
 		if ($result===false) return false;
 		return true;

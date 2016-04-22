@@ -19,7 +19,7 @@ final class Albums {
 	public function get($public = true) {
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 0, func_get_args());
+		Plugins::get()->activate(__METHOD__, 0, func_get_args(), $this);
 
 		// Initialize return var
 		$return = array(
@@ -74,7 +74,7 @@ final class Albums {
 		$return['num'] = $albums->num_rows;
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 1, func_get_args());
+		Plugins::get()->activate(__METHOD__, 1, func_get_args(), $this);
 
 		return $return;
 

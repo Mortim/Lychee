@@ -11,7 +11,7 @@ final class Session {
 	public function init($public = true) {
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 0, func_get_args());
+		Plugins::get()->activate(__METHOD__, 0, func_get_args(), $this);
 
 		// Return settings
 		$return['config'] = Settings::get();
@@ -55,7 +55,7 @@ final class Session {
 		}
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 1, func_get_args());
+		Plugins::get()->activate(__METHOD__, 1, func_get_args(), $this);
 
 		return $return;
 
@@ -68,7 +68,7 @@ final class Session {
 	public function login($username, $password) {
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 0, func_get_args());
+		Plugins::get()->activate(__METHOD__, 0, func_get_args(), $this);
 
 		$username_crypt = crypt($username, Settings::get()['username']);
 		$password_crypt = crypt($password, Settings::get()['password']);
@@ -86,7 +86,7 @@ final class Session {
 		if ($this->noLogin()===true) return true;
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 1, func_get_args());
+		Plugins::get()->activate(__METHOD__, 1, func_get_args(), $this);
 
 		// Log failed log in
 		Log::error(Database::get(), __METHOD__, __LINE__, 'User (' . $username . ') has tried to log in from ' . $_SERVER['REMOTE_ADDR']);
@@ -120,13 +120,13 @@ final class Session {
 	public function logout() {
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 0, func_get_args());
+		Plugins::get()->activate(__METHOD__, 0, func_get_args(), $this);
 
 		session_unset();
 		session_destroy();
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 1, func_get_args());
+		Plugins::get()->activate(__METHOD__, 1, func_get_args(), $this);
 
 		return true;
 

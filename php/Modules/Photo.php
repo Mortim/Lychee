@@ -53,7 +53,7 @@ final class Photo {
 		}
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 0, func_get_args());
+		Plugins::get()->activate(__METHOD__, 0, func_get_args(), $this);
 
 		switch($albumID) {
 
@@ -249,7 +249,7 @@ final class Photo {
 		}
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 1, func_get_args());
+		Plugins::get()->activate(__METHOD__, 1, func_get_args(), $this);
 
 		return $id;
 
@@ -293,7 +293,7 @@ final class Photo {
 	private function createThumb($url, $filename, $type, $width, $height) {
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 0, func_get_args());
+		Plugins::get()->activate(__METHOD__, 0, func_get_args(), $this);
 
 		// Quality of thumbnails
 		$thumbQuality = 90;
@@ -373,7 +373,7 @@ final class Photo {
 		}
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 1, func_get_args());
+		Plugins::get()->activate(__METHOD__, 1, func_get_args(), $this);
 
 		return true;
 
@@ -393,7 +393,7 @@ final class Photo {
 		// (int) $height = Height of the photo
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 0, func_get_args());
+		Plugins::get()->activate(__METHOD__, 0, func_get_args(), $this);
 
 		// Set to true when creation of medium-photo failed
 		$error = false;
@@ -448,7 +448,7 @@ final class Photo {
 		}
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 1, func_get_args());
+		Plugins::get()->activate(__METHOD__, 1, func_get_args(), $this);
 
 		if ($error===true) return false;
 		return true;
@@ -466,7 +466,7 @@ final class Photo {
 		// (array) $info = ['orientation', 'width', 'height']
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 0, func_get_args());
+		Plugins::get()->activate(__METHOD__, 0, func_get_args(), $this);
 
 		$swapSize = false;
 
@@ -572,7 +572,7 @@ final class Photo {
 		}
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 1, func_get_args());
+		Plugins::get()->activate(__METHOD__, 1, func_get_args(), $this);
 
 		// SwapSize should be true when the image has been rotated
 		// Return new dimensions in this case
@@ -641,7 +641,7 @@ final class Photo {
 		Validator::required(isset($this->photoIDs), __METHOD__);
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 0, func_get_args());
+		Plugins::get()->activate(__METHOD__, 0, func_get_args(), $this);
 
 		// Get photo
 		$query  = Database::prepare(Database::get(), "SELECT * FROM ? WHERE id = '?' LIMIT 1", array(LYCHEE_TABLE_PHOTOS, $this->photoIDs));
@@ -702,7 +702,7 @@ final class Photo {
 		}
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 1, func_get_args());
+		Plugins::get()->activate(__METHOD__, 1, func_get_args(), $this);
 
 		return $photo;
 
@@ -721,7 +721,7 @@ final class Photo {
 		// (array) $return
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 0, func_get_args());
+		Plugins::get()->activate(__METHOD__, 0, func_get_args(), $this);
 
 		$iptcArray = array();
 		$info      = getimagesize($url, $iptcArray);
@@ -833,7 +833,7 @@ final class Photo {
 		}
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 1, func_get_args());
+		Plugins::get()->activate(__METHOD__, 1, func_get_args(), $this);
 
 		return $return;
 
@@ -849,7 +849,7 @@ final class Photo {
 		Validator::required(isset($this->photoIDs), __METHOD__);
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 0, func_get_args());
+		Plugins::get()->activate(__METHOD__, 0, func_get_args(), $this);
 
 		// Get photo
 		$query  = Database::prepare(Database::get(), "SELECT title, url FROM ? WHERE id = '?' LIMIT 1", array(LYCHEE_TABLE_PHOTOS, $this->photoIDs));
@@ -894,7 +894,7 @@ final class Photo {
 		readfile(LYCHEE_UPLOADS_BIG . $photo->url);
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 1, func_get_args());
+		Plugins::get()->activate(__METHOD__, 1, func_get_args(), $this);
 
 		return true;
 
@@ -910,14 +910,14 @@ final class Photo {
 		Validator::required(isset($this->photoIDs), __METHOD__);
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 0, func_get_args());
+		Plugins::get()->activate(__METHOD__, 0, func_get_args(), $this);
 
 		// Set title
 		$query  = Database::prepare(Database::get(), "UPDATE ? SET title = '?' WHERE id IN (?)", array(LYCHEE_TABLE_PHOTOS, $title, $this->photoIDs));
 		$result = Database::execute(Database::get(), $query, __METHOD__, __LINE__);
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 1, func_get_args());
+		Plugins::get()->activate(__METHOD__, 1, func_get_args(), $this);
 
 		if ($result===false) return false;
 		return true;
@@ -934,14 +934,14 @@ final class Photo {
 		Validator::required(isset($this->photoIDs), __METHOD__);
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 0, func_get_args());
+		Plugins::get()->activate(__METHOD__, 0, func_get_args(), $this);
 
 		// Set description
 		$query  = Database::prepare(Database::get(), "UPDATE ? SET description = '?' WHERE id IN ('?')", array(LYCHEE_TABLE_PHOTOS, $description, $this->photoIDs));
 		$result = Database::execute(Database::get(), $query, __METHOD__, __LINE__);
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 1, func_get_args());
+		Plugins::get()->activate(__METHOD__, 1, func_get_args(), $this);
 
 		if ($result===false) return false;
 		return true;
@@ -958,7 +958,7 @@ final class Photo {
 		Validator::required(isset($this->photoIDs), __METHOD__);
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 0, func_get_args());
+		Plugins::get()->activate(__METHOD__, 0, func_get_args(), $this);
 
 		// Init vars
 		$error = false;
@@ -984,7 +984,7 @@ final class Photo {
 		}
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 1, func_get_args());
+		Plugins::get()->activate(__METHOD__, 1, func_get_args(), $this);
 
 		if ($error===true) return false;
 		return true;
@@ -1003,7 +1003,7 @@ final class Photo {
 		Validator::required(isset($this->photoIDs), __METHOD__);
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 0, func_get_args());
+		Plugins::get()->activate(__METHOD__, 0, func_get_args(), $this);
 
 		// Get photo
 		$query  = Database::prepare(Database::get(), "SELECT public, album FROM ? WHERE id = '?' LIMIT 1", array(LYCHEE_TABLE_PHOTOS, $this->photoIDs));
@@ -1042,7 +1042,7 @@ final class Photo {
 		}
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 1, func_get_args());
+		Plugins::get()->activate(__METHOD__, 1, func_get_args(), $this);
 
 		// Photo private
 		return 0;
@@ -1059,7 +1059,7 @@ final class Photo {
 		Validator::required(isset($this->photoIDs), __METHOD__);
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 0, func_get_args());
+		Plugins::get()->activate(__METHOD__, 0, func_get_args(), $this);
 
 		// Get public
 		$query  = Database::prepare(Database::get(), "SELECT public FROM ? WHERE id = '?' LIMIT 1", array(LYCHEE_TABLE_PHOTOS, $this->photoIDs));
@@ -1084,7 +1084,7 @@ final class Photo {
 		$result = Database::execute(Database::get(), $query, __METHOD__, __LINE__);
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 1, func_get_args());
+		Plugins::get()->activate(__METHOD__, 1, func_get_args(), $this);
 
 		if ($result===false) return false;
 		return true;
@@ -1101,14 +1101,14 @@ final class Photo {
 		Validator::required(isset($this->photoIDs), __METHOD__);
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 0, func_get_args());
+		Plugins::get()->activate(__METHOD__, 0, func_get_args(), $this);
 
 		// Set album
 		$query  = Database::prepare(Database::get(), "UPDATE ? SET album = '?' WHERE id IN (?)", array(LYCHEE_TABLE_PHOTOS, $albumID, $this->photoIDs));
 		$result = Database::execute(Database::get(), $query, __METHOD__, __LINE__);
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 1, func_get_args());
+		Plugins::get()->activate(__METHOD__, 1, func_get_args(), $this);
 
 		if ($result===false) return false;
 		return true;
@@ -1128,7 +1128,7 @@ final class Photo {
 		Validator::required(isset($this->photoIDs), __METHOD__);
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 0, func_get_args());
+		Plugins::get()->activate(__METHOD__, 0, func_get_args(), $this);
 
 		// Parse tags
 		$tags = preg_replace('/(\ ,\ )|(\ ,)|(,\ )|(,{1,}\ {0,})|(,$|^,)/', ',', $tags);
@@ -1139,7 +1139,7 @@ final class Photo {
 		$result = Database::execute(Database::get(), $query, __METHOD__, __LINE__);
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 1, func_get_args());
+		Plugins::get()->activate(__METHOD__, 1, func_get_args(), $this);
 
 		if ($result===false) return false;
 		return true;
@@ -1156,7 +1156,7 @@ final class Photo {
 		Validator::required(isset($this->photoIDs), __METHOD__);
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 0, func_get_args());
+		Plugins::get()->activate(__METHOD__, 0, func_get_args(), $this);
 
 		// Init vars
 		$error = false;
@@ -1182,6 +1182,9 @@ final class Photo {
 
 		}
 
+		// Call plugins
+		Plugins::get()->activate(__METHOD__, 1, func_get_args(), $this);
+
 		if ($error===true) return false;
 		return true;
 
@@ -1197,7 +1200,7 @@ final class Photo {
 		Validator::required(isset($this->photoIDs), __METHOD__);
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 0, func_get_args());
+		Plugins::get()->activate(__METHOD__, 0, func_get_args(), $this);
 
 		// Init vars
 		$error = false;
@@ -1254,7 +1257,7 @@ final class Photo {
 		}
 
 		// Call plugins
-		Plugins::get()->activate(__METHOD__, 1, func_get_args());
+		Plugins::get()->activate(__METHOD__, 1, func_get_args(), $this);
 
 		if ($error===true) return false;
 		return true;
